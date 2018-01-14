@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.koaladynamo.rubberband"
+    android:versionCode="4"
+    android:versionName="1.3" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.koaladynamo.rubberband.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+		<meta-data android:name="maru-scorecenter_app" android:value="true" />        
+        
+		
+		<!-- 3-2. (1) ScoreCenterActivityの定義 -->
+		<activity
+			android:name="jp.maru.scorecenter.ScoreCenterActivity"
+			android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale|uiMode|screenSize|smallestScreenSize|layoutDirection" />
+		<!-- 3-2. (2) ScoreCenterReceiverの定義 -->
+		<receiver
+			android:name="jp.maru.scorecenter.ScoreCenterReceiver"
+			android:exported="true"
+			android:permission="android.permission.INTERNET" >
+			<intent-filter>
+				<action android:name="MARU_SCORE_CENTER_SYNC" />
+				<action android:name="com.koaladynamo.rubberband.MARU_SCORE_CENTER_WELCOME" />
+				<category android:name="android.intent.category.DEFAULT" />
+	
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.PACKAGE_ADDED" />
+				<data android:scheme="package" />
+			</intent-filter>
+		</receiver>
+		<!-- 3-2. (3) ScoreCenterServiceの定義 -->
+		<service
+			android:name="jp.maru.scorecenter.ScoreCenterService"
+			android:exported="true"
+			android:process=":jp.maru.scorecenter.service"
+			android:permission="android.permission.INTERNET" />			
+					
+		<!--  adMob -->
+        <activity android:name="com.google.ads.AdActivity"
+              android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+
+        </application>
+</manifest>
